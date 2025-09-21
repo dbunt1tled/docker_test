@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -29,10 +29,26 @@ jobs:
         run: go test ./... -v
 
       - name: Build application
-        run: go build -o docker_test main.go
+        run: go build -o test_docker main.go
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: docker_test
-          path: docker_test
+          name: test_docker
+          path: test_docker
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/test_docker:latest
+            ${{ secrets.DOCKER_USERNAME }}/test_docker:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/test_docker:${{ github.ref_name }}
