@@ -1,7 +1,7 @@
 # Docker Test Application
 
-![Build](https://github.com/<username>/<repo>/actions/workflows/docker.yml/badge.svg)
-![Docker Pulls](https://img.shields.io/docker/pulls/username/myapp)
+![Build](https://github.com/dbunt1tled/docker_test/actions/workflows/ci.yml/badge.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/dbunt1tled/test_docker)
 
 A simple Go web application that connects to a PostgreSQL database and serves the database version via an HTTP endpoint.
 
