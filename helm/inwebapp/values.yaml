@@ -1,0 +1,53 @@
+# values.yaml
+app:
+  replicaCount: 1
+  image:
+    repository: dbunt1tled/test_docker
+    tag: v1.0.1
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  secrets:
+    db_dsn: postgresql://postgres:postgres@inwebapp-postgres:5432/postgres?sslmode=disable
+  env:
+    APP_ENV: "production"
+    LOG_LEVEL: "info"
+
+ingress:
+  enabled: true
+  host: inwebapp.local
+  className: nginx
+
+postgres:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "15"
+    pullPolicy: IfNotPresent
+  service:
+    type: "ClusterIP"
+    port: 5432
+    targetPort: 5432
+  secrets:
+    db_port: 5432
+    db_user: postgres
+    db_password: postgres
+    db_db: postgres
+  port: 5432
+  user: postgres
+  password: postgres
+  db: postgres
+  persistence:
+    enabled: true
+    size: "1Gi"
+    storageClass: ""
+    accessMode: "ReadWriteOnce"
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "128Mi"
+      requests:
+        cpu: "100m"
+        memory: "128Mi"

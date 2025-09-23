@@ -31,3 +31,4 @@ go.work.sum
 nginx/
 db/
 db_data/
+helm/
