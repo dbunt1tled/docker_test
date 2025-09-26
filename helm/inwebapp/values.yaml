@@ -17,7 +17,7 @@ app:
 
 ingress:
   enabled: true
-  host: inwebapp.local
+  host: app.inwebapp.local
   className: nginx
 
 postgres:
@@ -51,3 +51,47 @@ postgres:
       requests:
         cpu: "100m"
         memory: "128Mi"
+
+prometheus:
+  enabled: true
+  #namespaceOverride: monitoring
+  grafana:
+    enabled: false
+  server:
+    ingress:
+      enabled: false
+      ingressClassName: nginx
+      hosts:
+        - prometheus.inwebapp.local
+      paths:
+        - /
+      tls: []
+
+loki-stack:
+  #namespaceOverride: logging
+  grafana:
+    enabled: false
+  promtail:
+    enabled: true
+
+ingress-nginx:
+  controller:
+    admissionWebhooks:
+      enabled: true
+    namespaceOverride: ingress-nginx
+
+grafana:
+  #namespaceOverride: monitoring
+  adminUser: admin
+  adminPassword: admin
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: true
+    host: grafana.inwebapp.local
+    className: nginx
+    ingressClassName: nginx
+    paths:
+      - /
+    tls: []

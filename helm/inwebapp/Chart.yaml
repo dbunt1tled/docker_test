@@ -4,3 +4,18 @@ description: inwebapp (app + postgres + ingress)
 type: application
 version: 0.1.0
 appVersion: "1.0.2"
+
+dependencies:
+  - name: prometheus
+    version: "27.39.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheus.enabled
+  - name: loki-stack
+    version: "2.10.2"
+    repository: "https://grafana.github.io/helm-charts"
+  - name: ingress-nginx
+    version: "4.13.2"
+    repository: "https://kubernetes.github.io/ingress-nginx"
+  - name: grafana
+    version: "8.6.0"
+    repository: "https://grafana.github.io/helm-charts"

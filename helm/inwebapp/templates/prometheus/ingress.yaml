@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "inwebapp.fullname" . }}-prometheus
+  namespace: default
+  labels:
+    {{- include "inwebapp.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.prometheus.server.ingress.hosts | first | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "inwebapp.fullname" . }}-prometheus-server
+                port:
+                  number: 80

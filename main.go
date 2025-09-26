@@ -8,6 +8,7 @@ import (
 	"os"
 
 	_ "github.com/lib/pq"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
@@ -37,6 +38,7 @@ func main() {
 			log.Fatal(err)
 		}
 	})
+	http.Handle("/metrics", promhttp.Handler())
 
 	err = http.ListenAndServe("0.0.0.0:8080", nil)
 	if err != nil {

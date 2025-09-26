@@ -1,0 +1,24 @@
+{{- if .Values.grafana.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "inwebapp.fullname" . }}-grafana
+  namespace: default
+  labels:
+    {{- include "inwebapp.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.grafana.ingress.className | quote }}
+spec:
+  ingressClassName: {{ .Values.grafana.ingress.className | quote }}
+  rules:
+    - host: {{ .Values.grafana.ingress.host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "inwebapp.fullname" . }}-grafana
+                port:
+                  number: {{ .Values.grafana.service.port }}
+{{- end }}
