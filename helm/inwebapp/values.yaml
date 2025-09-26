@@ -3,7 +3,7 @@ app:
   replicaCount: 1
   image:
     repository: dbunt1tled/test_docker
-    tag: v1.0.2
+    tag: v1.0.5
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -52,6 +52,15 @@ postgres:
         cpu: "100m"
         memory: "128Mi"
 
+kube-prometheus-stack:
+  grafana:
+    sidecar:
+      datasources: {}
+      notifiers: {}
+      plugins: {}
+      alerts: {}
+      dashboards: {}
+
 prometheus:
   enabled: true
   #namespaceOverride: monitoring
@@ -73,7 +82,7 @@ prometheus:
     enabled: false
   server:
     ingress:
-      enabled: false
+      enabled: true
       ingressClassName: nginx
       hosts:
         - prometheus.inwebapp.local
@@ -85,6 +94,7 @@ loki-stack:
   #namespaceOverride: logging
   grafana:
     enabled: false
+    testFramework: {}
   promtail:
     enabled: true
 
