@@ -3,7 +3,7 @@ app:
   replicaCount: 1
   image:
     repository: dbunt1tled/test_docker
-    tag: v1.0.1
+    tag: v1.0.2
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -55,6 +55,20 @@ postgres:
 prometheus:
   enabled: true
   #namespaceOverride: monitoring
+  serviceMonitor:
+    enabled: true
+    additionalServiceMonitors:
+      - name: inwebapp-app
+        selector:
+          matchLabels:
+            app: inwebapp-app
+        endpoints:
+          - port: http
+            path: /metrics
+            interval: 15s
+            scheme: http
+            tlsConfig:
+              insecureSkipVerify: true
   grafana:
     enabled: false
   server:
