@@ -1,5 +1,5 @@
 # ===== Stage 1: build =====
-FROM --platform=linux/x86_64 golang:1.22-alpine AS build_go
+FROM golang:1.25-alpine AS build_go
 WORKDIR /app
 
 RUN apk add --no-cache git
