@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "inwebapp.fullname" . }}-loki-servicemonitor
+  labels:
+    release: {{ include "inwebapp.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      app: loki
+  endpoints:
+    - port: http-metrics
+      path: /metrics
+      interval: 30s

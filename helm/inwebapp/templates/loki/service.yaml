@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "inwebapp.fullname" . }}-loki-metrics
+  labels:
+    app: loki
+    release: {{ include "inwebapp.fullname" . }}
+spec:
+  selector:
+    app: loki
+  ports:
+    - name: http-metrics
+      port: 3100
+      targetPort: 3100
