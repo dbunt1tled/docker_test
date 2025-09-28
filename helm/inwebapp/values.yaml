@@ -3,7 +3,7 @@ app:
   replicaCount: 1
   image:
     repository: dbunt1tled/test_docker
-    tag: v1.0.5
+    tag: v1.0.6
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -84,6 +84,7 @@ prometheus:
     ingress:
       enabled: true
       ingressClassName: nginx
+      portName: http-web
       hosts:
         - prometheus.inwebapp.local
       paths:

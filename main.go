@@ -13,7 +13,6 @@ import (
 
 func main() {
 	dbHost := os.Getenv("DATABASE_URL")
-	dbHost = "postgresql://admin:12345678@localhost:5432/postgres?sslmode=disable"
 	log.Println(dbHost)
 	db, err := sql.Open("postgres", dbHost)
 	if err != nil {
