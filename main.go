@@ -27,7 +27,7 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		var version string
-		log.Println("Incoming Request")
+		log.Printf("Incoming Request %s (%s): %s", r.RequestURI, r.UserAgent(), r.RemoteAddr)
 		err := db.QueryRow("SELECT version()").Scan(&version)
 		if err != nil {
 			log.Fatal(err)
